@@ -3,7 +3,7 @@ const path = require('path');
 module.exports = function (options) {
   return {
     ...options,
-    title: `${options.title} - Harness`
+    title: `${options.title} - Harness`,
     entry: {
       index: path.resolve(__dirname, '../../../harness/harness.tsx'),
     },
