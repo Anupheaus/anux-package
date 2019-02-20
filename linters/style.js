@@ -1,5 +1,6 @@
+const modulePath = require.resolve('stylelint-config-sass-guidelines');
 module.exports = {
-  "extends": "stylelint-config-sass-guidelines",
+  "extends": modulePath,
   "ignoreFiles": "./**/*.tsx",
   "rules": {
     "selector-type-no-unknown": null,
