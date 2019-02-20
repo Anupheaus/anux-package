@@ -36,7 +36,7 @@ function createSingleConfig(options) {
     ...options,
   };
 
-  if (options.configName === 'harness') { options = require('configs/harness')(options); }
+  if (options.configName === 'harness') { options = require('./configs/harness')(options); }
 
   if (options.outputPath == null) { throw new Error('The output path needs to be specified to create a valid webpack configuration.'); }
   if (options.noVendor) { options.separateVendor = false; }
