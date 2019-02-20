@@ -1,6 +1,6 @@
 {
   "name": "anux-package",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "./dist/index.js",
   "repository": "https://github.com/Anupheaus/anux-package.git",
   "author": "Anupheaus <anupheaus@gmail.com>",
@@ -13,7 +13,7 @@
   "files": [
     "dist",
     "linters",
-    "config",
+    "configs",
     "harness"
   ],
   "dependencies": {
