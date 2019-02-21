@@ -16,6 +16,7 @@
     "configs",
     "harness"
   ],
+  "types": "./dist/index.d.ts",
   "dependencies": {
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
