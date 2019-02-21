@@ -30,7 +30,7 @@
   ],
   "typeAcquisition": {
     "exclude": [
-      "/dist"
+      "./dist"
     ]
   }
 }
