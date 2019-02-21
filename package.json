@@ -14,9 +14,10 @@
     "dist",
     "linters",
     "configs",
-    "harness"
+    "harness",
+    "global.d.ts"
   ],
-  "types": "./dist/index.d.ts",
+  "types": "./global.d.ts",
   "dependencies": {
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",
