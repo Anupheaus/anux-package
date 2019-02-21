@@ -82,6 +82,31 @@ function createSingleConfig(options) {
   return options.measureSpeed ? speedMeasure.wrap(config) : config;
 };
 
+/**
+ * @typedef {object} Options
+ * @property {string} title The title of this project.
+ * @property {string} [target] Typically 'web' or 'node'. Default is 'web'.
+ * @property {string} [mode] The mode of the compilation, either 'development' or 'production'. Default is 'development'.
+ * @property {object} [entry] The entry file for this compilation. Default typically this is { index: './src/index.ts' }.
+ * @property {string} [outputPath] The path where you want the output of the compilation to be saved to. Default is './dist/'.
+ * @property {object} [aliases] A map object of aliases for imports. Default is null.
+ * @property {boolean} [cleanOutputPath] Whether or not to clear the output path before writing the new compiled files to that location. Default is false.
+ * @property {boolean} [measureSpeed] Whether or not to measure the speed of this configuration; mainly for debugging purposes. Default is false.
+ * @property {string} [htmlTemplate] Default is 'index.pug'.
+ * @property {string} [index] Default is 'index.html'.
+ * @property {number} [port] Default is 1234.
+ * @property {string} [appCSSFileName] Default is '[name].css'.
+ * @property {object} [constants] Default is {}.
+ * @property {boolean} [embedCSS] Default is false.
+ * @property {boolean} [noCSS] Default is false.
+ * @property {boolean} [noMaps] Default is false.
+ * @property {boolean} [includeTests] Default is false.
+ * @property {boolean} [isServer] Default is true if being executed with webpack-dev-server.
+ */
+
+ /**
+  * @param {Options | Options[]} options The options for creating this webpack configuration.
+  */
 module.exports = function createConfig(options) {
   const indexOfMode = process.argv.findIndex(arg => arg.toLowerCase() === '--mode');
   const mode = indexOfMode !== -1 ? process.argv[indexOfMode + 1] : undefined;
