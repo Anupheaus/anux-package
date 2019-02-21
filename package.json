@@ -1,6 +1,6 @@
 {
   "name": "anux-package",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "main": "./dist/index.js",
   "repository": "https://github.com/Anupheaus/anux-package.git",
   "author": "Anupheaus <anupheaus@gmail.com>",
@@ -14,8 +14,10 @@
     "dist",
     "linters",
     "configs",
-    "harness"
+    "harness",
+    "global.d.ts"
   ],
+  "types": "./global.d.ts",
   "dependencies": {
     "@types/react": "^16.8.4",
     "@types/react-dom": "^16.8.2",

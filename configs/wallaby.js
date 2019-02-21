@@ -35,7 +35,7 @@ function setup(config) {
 }
 
 /**
- * 
+ * A function to configure Wallaby for your package.
  * @param {Config} config The configuration settings for Wallaby
  */
 module.exports = function (config) {
