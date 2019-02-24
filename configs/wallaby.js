@@ -5,7 +5,7 @@
  */
 
 function setup(config) {
-  require('anux-common');
+  try { require('anux-common'); } catch (error) { }
   const chai = require('chai');
   const spies = require('chai-spies');
   const fuzzy = require('chai-fuzzy');
