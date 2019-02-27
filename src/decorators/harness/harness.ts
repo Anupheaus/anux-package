@@ -4,13 +4,13 @@ export interface IHarnessDetails {
   name: string;
 }
 
-export function harness(details: IHarnessDetails): ClassDecorator | MethodDecorator {
-  return (target: Object) => {
+export function harness(details: IHarnessDetails): ClassDecorator {
+  return target => {
     target[harnessDetails] = details;
     return target;
   };
 }
 
-export function getHarnessDetails(target: Object | Function): IHarnessDetails {
+export function getHarnessDetails(target: Function): IHarnessDetails {
   return target[harnessDetails];
 }
