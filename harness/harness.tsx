@@ -26,9 +26,13 @@ const harnesses: IHarness[] = [];
 Object.keys(exportedHarnesses)
   .forEach(key => {
     const harness = exportedHarnesses[key];
-    if (isOrDerivesFrom(harness, React.PureComponent)) {
+    if (isOrDerivesFrom(harness, React.PureComponent) || typeof (harness) === 'function') {
       const details = getHarnessDetails(harness);
-      if (!details) { return; }
+      if (!details) {
+        // tslint:disable-next-line: no-console
+        console.warn('Found a react component or function being exported from a harness file without a harness decorator.');
+        return;
+      }
       harnesses.push({ ...details, type: harness });
     }
   });
