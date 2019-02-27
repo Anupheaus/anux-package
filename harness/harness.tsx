@@ -1,3 +1,4 @@
+import 'anux-react-common';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as exportedHarnesses from '../../../harnesses';
@@ -14,6 +15,7 @@ interface IHarness extends IHarnessDetails {
 
 function isOrDerivesFrom(target: Function, source: Function) {
   let sourcePrototype = typeof (target) === 'function' ? target.prototype : target;
+  if (sourcePrototype == null) { return false; }
   const derivesFromPrototype = typeof (source) === 'function' ? source.prototype : source;
   do {
     if (sourcePrototype === derivesFromPrototype) { return true; }
