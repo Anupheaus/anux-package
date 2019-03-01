@@ -5,6 +5,11 @@ const SpeedMeasurePlugin = require('speed-measure-webpack-plugin');
 
 process.traceDeprecation = true;
 
+function getParam(name) {
+  const indexOfParam = process.argv.findIndex(arg => arg.toLowerCase() === `--${name}`);
+  return indexOfParam !== -1 ? process.argv[indexOfParam + 1] : undefined;
+}
+
 function extractCallerPath(data) {
   return path.dirname(data.filePath);
 }
@@ -22,6 +27,7 @@ function createSingleConfig(options) {
     aliases: null,
     cleanOutputPath: false,
     measureSpeed: false,
+    isWatching: false,
     htmlTemplate: 'index.pug',
     index: 'index.html',
     port: 1234,
@@ -92,6 +98,7 @@ function createSingleConfig(options) {
  * @property {object} [aliases] A map object of aliases for imports. Default is null.
  * @property {boolean} [cleanOutputPath] Whether or not to clear the output path before writing the new compiled files to that location. Default is false.
  * @property {boolean} [measureSpeed] Whether or not to measure the speed of this configuration; mainly for debugging purposes. Default is false.
+ * @property {boolean} [isWatching] Whether or not the files within this compilation are being watched. Default is false.
  * @property {string} [htmlTemplate] Default is 'index.pug'.
  * @property {string} [index] Default is 'index.html'.
  * @property {number} [port] Default is 1234.
@@ -104,26 +111,24 @@ function createSingleConfig(options) {
  * @property {boolean} [isServer] Default is true if being executed with webpack-dev-server.
  */
 
- /**
-  * @param {Options | Options[]} options The options for creating this webpack configuration.
-  */
+/**
+ * @param {Options | Options[]} options The options for creating this webpack configuration.
+ */
 module.exports = function createConfig(options) {
-  const indexOfMode = process.argv.findIndex(arg => arg.toLowerCase() === '--mode');
-  const mode = indexOfMode !== -1 ? process.argv[indexOfMode + 1] : undefined;
-
-  const indexOfConfigName = process.argv.findIndex(arg => arg.toLowerCase() === '--config-name');
-  const configName = indexOfConfigName !== -1 ? process.argv[indexOfConfigName + 1] : undefined;
-
   const root = extractCallerPath(callerId.getData());
-  options = {
-    ...options,
-    root: options.root ? path.resolve(root, options.root) : root,
-    configName,
-    mode,
-  };
+  const mode = getParam('mode');
+  const configName = getParam('config-name');
+  const isWatching = !!getParam('watch');
 
   if (!(options instanceof Array)) { options = [options]; }
 
-  const configs = options.map(createSingleConfig);
+  const configs = options.map(innerOptions => createSingleConfig({
+    mode,
+    root,
+    configName,
+    isWatching,
+    ...innerOptions,
+  }));
+
   return configs.length > 1 ? configs : configs[0];
 };

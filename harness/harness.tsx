@@ -1,4 +1,4 @@
-import 'anux-react-common';
+import 'anux-common';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import * as exportedHarnesses from '../../../harnesses';
@@ -13,22 +13,11 @@ interface IHarness extends IHarnessDetails {
   type: new (...args: any[]) => React.PureComponent;
 }
 
-function isOrDerivesFrom(target: Function, source: Function) {
-  let sourcePrototype = typeof (target) === 'function' ? target.prototype : target;
-  if (sourcePrototype == null) { return false; }
-  const derivesFromPrototype = typeof (source) === 'function' ? source.prototype : source;
-  do {
-    if (sourcePrototype === derivesFromPrototype) { return true; }
-    sourcePrototype = Object.getPrototypeOf(sourcePrototype);
-  } while (sourcePrototype !== Object.prototype);
-  return false;
-}
-
 const harnesses: IHarness[] = [];
 Object.keys(exportedHarnesses)
   .forEach(key => {
     const harness = exportedHarnesses[key];
-    if (isOrDerivesFrom(harness, React.PureComponent) || typeof (harness) === 'function') {
+    if (Reflect['isOrDerivesFrom'](harness, React.PureComponent) || typeof (harness) === 'function') {
       const details = getHarnessDetails(harness);
       if (!details) {
         // tslint:disable-next-line: no-console

@@ -32,11 +32,10 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         }),
       },
       {
-        test: /\.tsx?$/,
+        test: /(?<!\.tests)\.tsx?$/,
         loader: 'ts-loader',
         options: {
           onlyCompileBundledFiles: true,
-          // allowTsInNodeModules: true,
         },
       },
       {

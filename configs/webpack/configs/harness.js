@@ -13,5 +13,6 @@ module.exports = function (options) {
     index: './harness.html',
     appCSSFileName: './index.css',
     cleanOutputPath: false,
+    isWatching: true,
   };
 };
