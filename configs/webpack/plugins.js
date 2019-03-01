@@ -8,7 +8,7 @@ const chalk = require('chalk');
 
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
-    (options.cleanOutputPath ? new CleanPlugin([path.join(options.outputPath, '*.*')], {
+    (options.cleanOutputPath ? new CleanPlugin([options.outputPath], {
       root: options.root,
       verbose: false,
     }) : null),
