@@ -27,7 +27,8 @@
     "node_modules",
     "../../../dist",
     "../../dist",
-    "**/*_dnc/**/*.*"
+    "**/*_dnc/**/*.*",
+    "**/*.tests.*"
   ],
   "typeAcquisition": {
     "exclude": [

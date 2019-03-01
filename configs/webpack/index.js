@@ -17,7 +17,7 @@ function extractCallerPath(data) {
 function createSingleConfig(options) {
   options = {
     title: 'Anux - Untitled Package',
-    target: 'web',
+    target: 'node',
     mode: 'development',
     configName: null,
     entry: {
@@ -91,7 +91,7 @@ function createSingleConfig(options) {
 /**
  * @typedef {object} Options
  * @property {string} title The title of this project.
- * @property {string} [target] Typically 'web' or 'node'. Default is 'web'.
+ * @property {string} [target] Typically 'web' or 'node'. Default is 'node'.
  * @property {string} [mode] The mode of the compilation, either 'development' or 'production'. Default is 'development'.
  * @property {object} [entry] The entry file for this compilation. Default typically this is { index: './src/index.ts' }.
  * @property {string} [outputPath] The path where you want the output of the compilation to be saved to. Default is './dist/'.
