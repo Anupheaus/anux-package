@@ -1,6 +1,10 @@
 {
   "extends": "./configs/tsconfig.json",
   "compilerOptions": {
-    "declarationDir": "./dist"
+    "declarationDir": "./dist",
+    "types": [
+      "mocha",
+      "chai"
+    ]
   }
 }
