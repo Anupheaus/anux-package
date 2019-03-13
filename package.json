@@ -67,7 +67,8 @@
     "chai-fuzzy": "^1.6.1",
     "mocha": "^6.0.2",
     "jsdom": "^13.2.0",
-    "ts-node": "^8.0.3"
+    "ts-node": "^8.0.3",
+    "codecov": "^3.2.0"
   },
   "devDependencies": {
     "gulp": "^4.0.0",
