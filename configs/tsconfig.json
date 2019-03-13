@@ -21,7 +21,12 @@
     "sourceMap": true,
     "jsx": "react",
     "declaration": true,
-    "declarationDir": "../../../dist"
+    "declarationDir": "../../../dist",
+    "types": [
+      "anux-package",
+      "mocha",
+      "chai"
+    ]
   },
   "exclude": [
     "node_modules",
