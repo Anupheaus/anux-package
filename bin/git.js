@@ -18,14 +18,14 @@ module.exports = {
     return shell.exec('git push');
   },
   commit(message) {
-    return shell.exec(`git commit -m '${message}'`);
+    return shell.exec(`git commit -a -m "${message}"`);
   },
   mergeInto(name, tag) {
     const currentBranchName = this.getBranchName();
     const cmds = [
       `git checkout ${name}`,
       `git pull`,
-      `git merge ${currentBranchName} -m 'Merge branch ${currentBranchName}'`,
+      `git merge ${currentBranchName} -m "Merge branch ${currentBranchName}"`,
       tag ? `git tag ${tag}` : undefined,
       `git push`,
       `git push --tags`,
