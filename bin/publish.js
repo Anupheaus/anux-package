@@ -17,7 +17,7 @@ function readPackageJson(path) {
 }
 
 function writePackageJson(path, content) {
-  fs.writeFileSync(path, content);
+  fs.writeFileSync(path, JSON.stringify(content));
 }
 
 /**
@@ -53,7 +53,12 @@ module.exports = function (config) {
     { title: 'Ensuring we are not on master branch', action: () => !git.isBranch('master') },
     { title: 'Building package', action: () => shell.exec(`yarn run build`) },
     { title: 'Executing tests', action: () => test(config), skipOn: '--skip-tests' },
-    { title: 'Updating package.json version number', action: () => writePackageJson(pathToPackageJson, { ...packageJson, version: tag }) },
+    {
+      title: 'Updating package.json version number', action: () => {
+        packageJson.version = tag;
+        return writePackageJson(pathToPackageJson, packageJson);
+      },
+    },
     { title: 'Committing and pushing final changes', action: [() => git.commit(`Updated to v${tag}`), () => git.push()] },
     { title: 'Publishing to NPM', action: () => shell.exec(`npm publish`) },
     { title: 'Merging to, tagging and pushing master branch', action: () => git.mergeInto('master', tag) },
