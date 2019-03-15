@@ -8,15 +8,20 @@
   "private": false,
   "scripts": {
     "build": "webpack --mode production",
-    "export": "gulp export"
+    "export": "gulp export",
+    "publish": "node ./bin/anux.js publish"
   },
   "files": [
     "dist",
     "linters",
     "configs",
     "harness",
+    "bin",
     "global.d.ts"
   ],
+  "bin": {
+    "anux": "./bin/anux.js"
+  },
   "types": "./global.d.ts",
   "dependencies": {
     "@types/react": "^16.8.6",
