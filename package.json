@@ -9,7 +9,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "export": "gulp export",
-    "publish": "node ./bin/anux.js publish"
+    "publish": "node ./bin/anux.js publish --skip-tests"
   },
   "files": [
     "dist",
