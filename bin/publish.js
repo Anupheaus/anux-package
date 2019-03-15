@@ -18,6 +18,7 @@ function readPackageJson(path) {
 
 function writePackageJson(path, content) {
   fs.writeFileSync(path, JSON.stringify(content, null, 2));
+  return true;
 }
 
 /**
