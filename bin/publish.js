@@ -17,7 +17,7 @@ function readPackageJson(path) {
 }
 
 function writePackageJson(path, content) {
-  fs.writeFileSync(path, JSON.stringify(content));
+  fs.writeFileSync(path, JSON.stringify(content, null, 2));
 }
 
 /**
@@ -43,6 +43,7 @@ module.exports = function (config) {
   if (!packageJson) { throw new Error('Unable to find the package.json file for this package.'); }
   const { name, version } = packageJson;
   let [major, minor, revision] = separateVersion(version);
+  revision++;
   const tag = `${major}.${minor}.${revision}`;
 
   revision += 1;
