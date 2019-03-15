@@ -17,6 +17,9 @@ module.exports = {
   push() {
     return shell.exec('git push');
   },
+  commit(message) {
+    return shell.exec(`git commit -m '${message}'`);
+  },
   mergeInto(name, tag) {
     const currentBranchName = this.getBranchName();
     const cmds = [
