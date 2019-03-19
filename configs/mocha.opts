@@ -1,3 +1,0 @@
--r ts-node/register
---require ./node_modules/anux-package/configs/mocha-setup.js
-./src/**/*.tests.ts
