@@ -18,8 +18,8 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
       {
         test: /\.pug$/,
         use: [
-          "html-loader",
-          "pug-html-loader"
+          'html-loader',
+          'pug-html-loader'
         ]
       },
       {

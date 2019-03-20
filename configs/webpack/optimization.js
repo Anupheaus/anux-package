@@ -14,16 +14,5 @@ module.exports = function optimization(options) {
         sourceMap: true,
       }),
     ],
-    // ...(options.target === 'web' ? {
-    //   splitChunks: {
-    //     cacheGroups: {
-    //       commons: {
-    //         test: /[\\/]node_modules[\\/]/,
-    //         name: "libs",
-    //         chunks: "all",
-    //       },
-    //     },
-    //   },
-    // } : null),
   };
-}
+};

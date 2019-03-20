@@ -33,4 +33,4 @@ module.exports = function (config) {
       setup: eval('(function () { (' + setup.toString() + ')(' + JSON.stringify(config) + '); })'),
     };
   };
-}
+};

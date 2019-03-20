@@ -15,17 +15,6 @@ function addNodeModules(options) {
     }), {});
 }
 module.exports = function externals(options) {
-  if (options.target !== 'node') { return undefined; }
-  return [nodeExternals()];
-  // if (options.includeArangoImports) {
-  //   return [/^@arangodb(\/.+)?$/];
-  // }
-  // const nodeModuleLibs = addNodeModules(options);
-  // return [
-  //   (_context, request, callback) => {
-  //     if (/^@arangodb(\/.+)?$/.test(request)) { return callback(null, 'undefined'); }
-  //     if (nodeModuleLibs[request]) { return callback(null, nodeModuleLibs[request]); }
-  //     return callback();
-  //   },
-  // ];
+  if (options.target !== 'node') { return null; }
+  return [nodeExternals()];  
 };

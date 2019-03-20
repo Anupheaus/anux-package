@@ -7,7 +7,7 @@ process.traceDeprecation = true;
 
 function getParam(name) {
   const indexOfParam = process.argv.findIndex(arg => arg.toLowerCase() === `--${name}`);
-  return indexOfParam !== -1 ? process.argv[indexOfParam + 1] : undefined;
+  return indexOfParam !== -1 ? process.argv[indexOfParam + 1] : null;
 }
 
 function extractCallerPath(data) {

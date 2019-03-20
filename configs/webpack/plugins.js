@@ -1,9 +1,9 @@
 const webpack = require('webpack');
-const path = require("path");
-const HtmlWebPackPlugin = require("html-webpack-plugin");
+const path = require('path');
+const HtmlWebPackPlugin = require('html-webpack-plugin');
 const NotifierPlugin = require('webpack-build-notifier');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const CleanPlugin = require("clean-webpack-plugin");
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
 const chalk = require('chalk');
 
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
@@ -18,7 +18,7 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
     }),
     new webpack.DefinePlugin(options.constants),
     ...(!options.noCSS ? [extractAppCSS, extractLibsCSS] :
-      [new webpack.NormalModuleReplacementPlugin(/\.(css|scss)$/, "node-noop")]),
+      [new webpack.NormalModuleReplacementPlugin(/\.(css|scss)$/, 'node-noop')]),
     (!options.noMaps ? new webpack.SourceMapDevToolPlugin({
       filename: '[file].map',
       exclude: ['libs.js'],
