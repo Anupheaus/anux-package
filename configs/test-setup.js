@@ -1,7 +1,7 @@
 /**
  * @param {object} config
- * @param {string} config.name 
  * @param {boolean} config.enableReact
+ * @param {string} config.root
  */
 function setup(config) {
   try { require('anux-common'); } catch (error) { }
@@ -16,20 +16,22 @@ function setup(config) {
   global['expect'] = chai.expect;
 
   if (config.enableReact) {
-    const jsdom = require('jsdom');
-    const dom = new jsdom.JSDOM('<!doctype html><html><body></body></html>');
-    const enzyme = require('enzyme');
+    const { JSDOM } = require('jsdom');
+    const { window } = new JSDOM('<!doctype html><html><body></body></html>', {
+      pretendToBeVisual: false,
+      userAgent: 'mocha',
+    });
     const React = require('react');
-    const enzymeAdapter = require('enzyme-adapter-react-16');
+    const enzyme = require('enzyme');
+    const Adapter = require('enzyme-adapter-react-16');
 
     global['React'] = React;
-    global['document'] = dom.window.document;
-    global['window'] = dom.window;
-    global.navigator = {
-      userAgent: 'node.js',
-    };
+    global['window'] = window;
+    global['document'] = window.document;
+    global['navigator'] = window.navigator;
+    global['enzyme'] = enzyme;
 
-    enzyme.configure({ adapter: new enzymeAdapter() });
+    enzyme.configure({ adapter: new Adapter() });
   }
 }
 
