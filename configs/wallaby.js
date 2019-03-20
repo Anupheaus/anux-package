@@ -11,7 +11,7 @@ module.exports = function (config) {
     name: 'Anux - Unknown Package',
     enableReact: false,
     ...config || {},
-  }
+  };
   return function () {
     return {
       name: config.name,
