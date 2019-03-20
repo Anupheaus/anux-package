@@ -7,8 +7,7 @@
   "license": "Apache-2.0",
   "private": false,
   "scripts": {
-    "build": "webpack --mode production",
-    "export": "gulp export"
+    "build": "webpack --mode production"
   },
   "files": [
     "dist",
@@ -71,8 +70,5 @@
     "jsdom-global": "^3.0.2",
     "shelljs": "^0.8.3"
   },
-  "devDependencies": {
-    "gulp": "^4.0.0",
-    "gulp-cli": "^2.0.1"
-  }
+  "devDependencies": {}
 }

@@ -86,7 +86,7 @@ function createSingleConfig(options) {
     },
   };
   return options.measureSpeed ? speedMeasure.wrap(config) : config;
-};
+}
 
 /**
  * @typedef {object} Options
