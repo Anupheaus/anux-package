@@ -72,9 +72,6 @@ function createSingleConfig(options) {
       umdNamedDefine: true,
     },
     resolve: require('./resolve')(options),
-    resolveLoader: {
-      modules: [path.resolve(options.root, './node_modules')],
-    },
     externals: require('./externals')(options),
     module: require('./module')(options, extractAppCSS, extractLibsCSS),
     plugins: require('./plugins')(options, extractAppCSS, extractLibsCSS),
