@@ -15,6 +15,6 @@ function addNodeModules(options) {
     }), {});
 }
 module.exports = function externals(options) {
-  if (options.target !== 'node') { return null; }
+  if (options.target !== 'node') { return undefined; } // needs to be undefined or webpack config won't work
   return [nodeExternals()];  
 };
