@@ -1,6 +1,6 @@
 {
   "name": "anux-package",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "main": "./dist/index.js",
   "repository": "https://github.com/Anupheaus/anux-package.git",
   "author": "Anupheaus <anupheaus@gmail.com>",
