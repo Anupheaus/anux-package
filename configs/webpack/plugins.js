@@ -8,10 +8,7 @@ const chalk = require('chalk');
 
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
-    (options.cleanOutputPath ? new CleanPlugin([options.outputPath], {
-      root: options.root,
-      verbose: false,
-    }) : null),
+    (options.cleanOutputPath ? new CleanPlugin() : null),
     new webpack.ProvidePlugin({
       React: 'react',
       ReactDOM: 'react-dom',
