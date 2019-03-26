@@ -17,6 +17,7 @@ module.exports = function (config) {
       name: config.name,
       files: [
         '!src/**/*.tests.ts?(x)',
+        { pattern: 'src/**/harness.tsx', load: false, instrument: false },
         { pattern: 'src/**/*.ts?(x)', load: false },
       ],
       tests: [
