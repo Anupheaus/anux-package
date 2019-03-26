@@ -25,7 +25,9 @@
     "types": [
       "anux-package",
       "mocha",
-      "chai"
+      "chai",
+      "chai-spies",
+      "chai-fuzzy"
     ]
   },
   "exclude": [
