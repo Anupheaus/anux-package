@@ -1,6 +1,18 @@
 const path = require('path');
 const callerId = require('caller-id');
-const fs = require('fs');
+
+function addIfExists(dependency) {
+  try {
+    require.resolve(dependency);
+    return dependency;
+  } catch (e) {
+    if (e.message && e.message.toLowerCase() === `cannot find module '${dependency}'`) {
+      return undefined;
+    } else {
+      throw e;
+    }
+  }
+}
 
 /**
  * @param {object} config
@@ -10,17 +22,13 @@ module.exports = function (config) {
   const { filePath } = callerId.getData();
   const root = path.dirname(filePath);
   process.env['test-config'] = JSON.stringify({ ...config, root });
-  const requiredModules = [
-    'ts-node/register',
-    'jsdom-global/register',
-    path.relative(root, path.resolve(__dirname, './test-setup.js')),
-  ];
-  try {
-    require.resolve('anux-common');
-    requiredModules.push('anux-common');
-  } catch (e) { }
   return {
-    require: requiredModules,
+    require: [
+      'ts-node/register',
+      'jsdom-global/register',
+      addIfExists('anux-common'),
+      path.relative(root, path.resolve(__dirname, './test-setup.js')),
+    ].filter(v => v != null),
     spec: './src/**/*.tests.+(ts|tsx)',
   };
 };
