@@ -6,15 +6,15 @@
 This repository provides tools and utility files to test and publish any Typescript repository.
 
 Test Configurations:
-  * Wallaby configuration
-  * Mocha configuration
-  * Chai configuration
-  * Enzyme configuration
+* Wallaby configuration
+* Mocha configuration
+* Chai configuration
+* Enzyme configuration
 
 Linter Configurations:
-  * tslint configuration
-  * SASS configuration
+* tslint configuration
+* SASS configuration
 
 Build Configurations:
-  * tsconfig configuration
-  * Webpack configuration
+* tsconfig configuration
+* Webpack configuration

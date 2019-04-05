@@ -52,7 +52,7 @@ function setup(config) {
       this.observe = () => void 0;
       this.unobserve = () => void 0;
       this.triggerWith = entries => delegate(entries);
-    }
+    };
 
     enzyme.configure({ adapter: new Adapter() });
   }

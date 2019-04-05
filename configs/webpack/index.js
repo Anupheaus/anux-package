@@ -43,14 +43,7 @@ function applyDefaults(options) {
   };
 }
 
-function createSingleConfig(options) {
-  options = applyDefaults(options);
-
-  if (options.configName === 'harness') { options = require('./configs/harness')(options); }
-
-  if (options.outputPath == null) { throw new Error('The output path needs to be specified to create a valid webpack configuration.'); }
-  if (options.noVendor) { options.separateVendor = false; }
-
+function createCSSExtractors(options) {
   const extractAppCSS = new ExtractTextPlugin({
     filename: options.appCSSFileName,
     allChunks: true,
@@ -61,6 +54,18 @@ function createSingleConfig(options) {
     allChunks: true,
     disable: options.embedCSS,
   });
+  return { extractAppCSS, extractLibsCSS };
+}
+
+function createSingleConfig(options) {
+  options = applyDefaults(options);
+
+  if (options.configName === 'harness') { options = require('./configs/harness')(options); }
+
+  if (options.outputPath == null) { throw new Error('The output path needs to be specified to create a valid webpack configuration.'); }
+  if (options.noVendor) { options.separateVendor = false; }
+
+  const { extractAppCSS, extractLibsCSS } = createCSSExtractors(options);
   const speedMeasure = new SpeedMeasurePlugin();
 
   const config = {
