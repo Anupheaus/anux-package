@@ -11,7 +11,7 @@ function addCleanPlugin(options) {
   return new CleanPlugin();
 }
 
-function addCSSExtraction(options) {
+function addCSSExtraction(options, extractAppCSS, extractLibsCSS) {
   if (options.noCSS) { return [new webpack.NormalModuleReplacementPlugin(/\.(css|scss)$/, 'node-noop')]; }
   return [extractAppCSS, extractLibsCSS];
 }
@@ -44,7 +44,7 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
       ReactDOM: 'react-dom',
     }),
     new webpack.DefinePlugin(options.constants),
-    ...addCSSExtraction(options),
+    ...addCSSExtraction(options, extractAppCSS, extractLibsCSS),
     addSourceMaps(options),
     new NotifierPlugin({
       title: options.title,
