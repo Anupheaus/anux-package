@@ -51,7 +51,7 @@ function setup(config) {
       window['resizeObserver'] = this;
       this.observe = () => void 0;
       this.unobserve = () => void 0;
-      this.triggerOn = entries => delegate(entries);
+      this.triggerWith = entries => delegate(entries);
     }
 
     enzyme.configure({ adapter: new Adapter() });
