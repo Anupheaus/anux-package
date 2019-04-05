@@ -31,6 +31,29 @@ function setup(config) {
     global['navigator'] = window.navigator;
     global['enzyme'] = enzyme;
 
+    const readWriteNumericProperty = {
+      value: 0,
+      enumerable: true,
+      configurable: true,
+      writable: true,
+    };
+
+    // set HTMLElement properties to be read-write
+    Object.defineProperties(window.HTMLElement.prototype, {
+      clientWidth: readWriteNumericProperty,
+      clientHeight: readWriteNumericProperty,
+      scrollWidth: readWriteNumericProperty,
+      scrollHeight: readWriteNumericProperty,
+    });
+
+    // mock the resize observer
+    window['ResizeObserver'] = function (delegate) {
+      window['resizeObserver'] = this;
+      this.observe = () => void 0;
+      this.unobserve = () => void 0;
+      this.triggerOn = entries => delegate(entries);
+    }
+
     enzyme.configure({ adapter: new Adapter() });
   }
 }
