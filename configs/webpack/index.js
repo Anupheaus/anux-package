@@ -14,8 +14,8 @@ function extractCallerPath(data) {
   return path.dirname(data.filePath);
 }
 
-function createSingleConfig(options) {
-  options = {
+function applyDefaults(options) {
+  return {
     title: 'Anux - Untitled Package',
     target: 'node',
     mode: 'development',
@@ -41,6 +41,10 @@ function createSingleConfig(options) {
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
     ...options,
   };
+}
+
+function createSingleConfig(options) {
+  options = applyDefaults(options);
 
   if (options.configName === 'harness') { options = require('./configs/harness')(options); }
 

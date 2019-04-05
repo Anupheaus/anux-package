@@ -6,33 +6,52 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const chalk = require('chalk');
 
+function addCleanPlugin(options) {
+  if (!options.cleanOutputPath) { return null; }
+  return new CleanPlugin();
+}
+
+function addCSSExtraction(options) {
+  if (options.noCSS) { return [new webpack.NormalModuleReplacementPlugin(/\.(css|scss)$/, 'node-noop')]; }
+  return [extractAppCSS, extractLibsCSS];
+}
+
+function addSourceMaps(options) {
+  if (options.noMaps) { return null; }
+  return new webpack.SourceMapDevToolPlugin({
+    filename: '[file].map',
+    exclude: ['libs.js'],
+  });
+}
+
+function addServerPlugins(options) {
+  if (!options.isServer) { return []; }
+  return [
+    new HtmlWebPackPlugin({
+      template: path.resolve(options.outputPath, options.htmlTemplate),
+      filename: path.resolve(options.outputPath, options.index),
+      inject: 'head',
+    }),
+    new webpack.HotModuleReplacementPlugin(),
+  ];
+}
+
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
-    (options.cleanOutputPath ? new CleanPlugin() : null),
+    addCleanPlugin(options),
     new webpack.ProvidePlugin({
       React: 'react',
       ReactDOM: 'react-dom',
     }),
     new webpack.DefinePlugin(options.constants),
-    ...(!options.noCSS ? [extractAppCSS, extractLibsCSS] :
-      [new webpack.NormalModuleReplacementPlugin(/\.(css|scss)$/, 'node-noop')]),
-    (!options.noMaps ? new webpack.SourceMapDevToolPlugin({
-      filename: '[file].map',
-      exclude: ['libs.js'],
-    }) : null),
+    ...addCSSExtraction(options),
+    addSourceMaps(options),
     new NotifierPlugin({
       title: options.title,
       suppressCompileStart: false,
       sound: !options.isWatching,
     }),
-    ...(options.isServer ? [
-      new HtmlWebPackPlugin({
-        template: path.resolve(options.outputPath, options.htmlTemplate),
-        filename: path.resolve(options.outputPath, options.index),
-        inject: 'head',
-      }),
-      new webpack.HotModuleReplacementPlugin(),
-    ] : []),
+    ...addServerPlugins(options),
     new ProgressBarPlugin({
       format: chalk`  building {blueBright ${options.title}} [:bar] {green :percent}`,
     }),
