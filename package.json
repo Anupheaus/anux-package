@@ -38,7 +38,7 @@
     "measure-speed": "^1.0.0",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-server": "3.2.1",
+    "webpack-dev-server": "3.3.1",
     "css-hot-loader": "^1.4.4",
     "html-loader": "^0.5.5",
     "pug-html-loader": "^1.1.5",
