@@ -45,6 +45,11 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         test: /\.(eot|svg|ttf|woff|woff2)$/,
         loader: 'file-loader?name=fonts/[name].[ext]',
       },
+      {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre',
+      },
     ],
   };
 };
