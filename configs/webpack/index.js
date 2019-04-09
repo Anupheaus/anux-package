@@ -40,19 +40,20 @@ function applyDefaults(options) {
     includeTests: false,
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
     ...options,
+    libraryTarget: options.target === 'node' ? 'commonjs2' : 'umd',
   };
 }
 
 function createCSSExtractors(options) {
   const extractAppCSS = new ExtractTextPlugin({
-    filename: options.appCSSFileName,
     allChunks: true,
     disable: options.embedCSS,
+    filename: options.appCSSFileName,
   });
   const extractLibsCSS = new ExtractTextPlugin({
-    filename: 'libs.css',
     allChunks: true,
     disable: options.embedCSS,
+    filename: 'libs.css',
   });
   return { extractAppCSS, extractLibsCSS };
 }
@@ -71,13 +72,13 @@ function createSingleConfig(options) {
   const config = {
     context: options.root,
     entry: options.entry,
-    mode: options.mode === 'production' ? 'production' : 'development',
+    mode: options.mode,
     devtool: options.noMaps ? false : 'source-map',
     target: options.target,
     output: {
       path: path.resolve(options.root, options.outputPath),
       filename: '[name].js',
-      libraryTarget: options.target === 'node' ? 'commonjs2' : 'umd',
+      libraryTarget: options.libraryTarget,
       umdNamedDefine: true,
     },
     resolve: require('./resolve')(options),
