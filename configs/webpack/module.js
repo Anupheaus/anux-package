@@ -1,4 +1,7 @@
+const AutoPrefixerPlugin = require('autoprefixer');
+
 module.exports = function module(options, extractAppCSS, extractLibsCSS) {
+  const autoPrefixer = AutoPrefixerPlugin();
   return {
     rules: [
       {
@@ -8,9 +11,9 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
           ...extractAppCSS.extract({
             fallback: 'style-loader',
             use: [
-              { loader: 'css-loader', query: { sourceMap: true } },
-              { loader: 'postcss-loader', query: { sourceMaps: true } },
-              { loader: 'sass-loader', query: { sourceMaps: true, silent: true, quiet: true } },
+              { loader: 'css-loader', options: { sourceMap: true } },
+              { loader: 'postcss-loader', options: { sourceMap: true, plugins: [autoPrefixer] } },
+              { loader: 'sass-loader', options: { sourceMap: true, silent: true, quiet: true } },
             ],
           }),
         ],
@@ -27,7 +30,7 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         loader: extractLibsCSS.extract({
           fallback: 'style-loader',
           use: [
-            { loader: 'css-loader' },
+            { loader: 'css-loader', options: { sourceMap: true } },
           ],
         }),
       },
