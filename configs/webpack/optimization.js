@@ -8,6 +8,7 @@ module.exports = function optimization(options) {
         parallel: true,
         terserOptions: {
           compress: true,
+          mangle: false,
           keep_classnames: true,
           keep_fnames: true,
         },
