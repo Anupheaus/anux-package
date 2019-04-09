@@ -72,7 +72,7 @@ function createSingleConfig(options) {
     context: options.root,
     entry: options.entry,
     mode: options.mode === 'production' ? 'production' : 'development',
-    devtool: false,
+    devtool: options.noMaps ? false : 'source-map',
     target: options.target,
     output: {
       path: path.resolve(options.root, options.outputPath),

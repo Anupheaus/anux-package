@@ -16,14 +16,6 @@ function addCSSExtraction(options, extractAppCSS, extractLibsCSS) {
   return [extractAppCSS, extractLibsCSS];
 }
 
-function addSourceMaps(options) {
-  if (options.noMaps) { return null; }
-  return new webpack.SourceMapDevToolPlugin({
-    filename: '[file].map',
-    exclude: ['libs.js'],
-  });
-}
-
 function addServerPlugins(options) {
   if (!options.isServer) { return []; }
   return [
@@ -45,7 +37,6 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
     }),
     new webpack.DefinePlugin(options.constants),
     ...addCSSExtraction(options, extractAppCSS, extractLibsCSS),
-    addSourceMaps(options),
     new NotifierPlugin({
       title: options.title,
       suppressCompileStart: false,
