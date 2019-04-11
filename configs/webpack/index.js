@@ -37,7 +37,7 @@ function applyDefaults(options) {
     noCSS: false,
     noMaps: false,
     includeArangoImports: false,
-    includeTests: false,
+    plugins: [],
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
     ...options,
     libraryTarget: options.target === 'node' ? 'commonjs2' : 'umd',

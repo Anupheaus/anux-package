@@ -46,5 +46,6 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
     new ProgressBarPlugin({
       format: chalk`  building {blueBright ${options.title}} [:bar] {green :percent}`,
     }),
+    ...options.plugins,
   ].filter(item => !!item);
 };
