@@ -32,6 +32,7 @@ function applyDefaults(options) {
     index: 'index.html',
     port: 1234,
     appCSSFileName: '[name].css',
+    excludeNodeModules: options.target === 'node',
     constants: {},
     embedCSS: false,
     noCSS: false,

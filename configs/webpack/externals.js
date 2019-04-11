@@ -8,9 +8,8 @@ function nodeExternals(context, request, callback) {
 };
 
 module.exports = function externals(options) {
-  if (options.target !== 'node') { return undefined; } // needs to be undefined or webpack config won't work
   return [
-    nodeExternals, 
+    options.excludeNodeModules ? nodeExternals : null,
     ...(options.externals || []),
-  ];
+  ].filter(v => !!v);
 };
