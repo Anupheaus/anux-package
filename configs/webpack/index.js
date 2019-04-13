@@ -15,9 +15,9 @@ function extractCallerPath(data) {
 }
 
 function applyDefaults(options) {
+  options.target = options.target || 'node';
   return {
     title: 'Anux - Untitled Package',
-    target: 'node',
     mode: 'development',
     configName: null,
     entry: {
@@ -32,16 +32,16 @@ function applyDefaults(options) {
     index: 'index.html',
     port: 1234,
     appCSSFileName: '[name].css',
-    excludeNodeModules: options.target === 'node',
+    excludeNodeModules: options.target === 'node' || options.target === 'library',
     constants: {},
     embedCSS: false,
-    noCSS: false,
-    noMaps: false,
+    noCSS: options.target === 'node',
+    noMaps: options.target !== 'web',
     externals: [],
     plugins: [],
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
     ...options,
-    libraryTarget: options.target === 'node' ? 'commonjs2' : 'umd',
+    libraryTarget: options.target === 'node' || options.target === 'library' ? 'commonjs2' : 'umd',
   };
 }
 
