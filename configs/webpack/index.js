@@ -75,7 +75,7 @@ function createSingleConfig(options) {
     entry: options.entry,
     mode: options.mode,
     devtool: options.noMaps ? false : 'source-map',
-    target: options.target,
+    target: ['node', 'library'].includes(options.target) ? 'node' : 'web',
     output: {
       path: path.resolve(options.root, options.outputPath),
       filename: '[name].js',
