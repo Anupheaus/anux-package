@@ -20,8 +20,6 @@
     "target": "es2018",
     "sourceMap": true,
     "jsx": "react",
-    "declaration": true,
-    "declarationDir": "../../../dist",
     "types": [
       "anux-package",
       "mocha",

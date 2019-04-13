@@ -39,6 +39,12 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         loader: 'ts-loader',
         options: {
           onlyCompileBundledFiles: true,
+          compilerOptions: {
+            ...(options.target === 'library' ? {
+              declaration: true,
+              declarationDir: options.outputPath,
+            } : {}),
+          }
         },
       },
       {
