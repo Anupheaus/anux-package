@@ -5,6 +5,7 @@ const NotifierPlugin = require('webpack-build-notifier');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const chalk = require('chalk');
+const NodemonPlugin = require('nodemon-webpack-plugin');
 
 function addCleanPlugin(options) {
   if (!options.cleanOutputPath) { return null; }
@@ -28,6 +29,11 @@ function addServerPlugins(options) {
   ];
 }
 
+function addNodemonPlugin(options) {
+  if (!options.isWatching || options.target !== 'node') { return undefined; }
+  return new NodemonPlugin();
+}
+
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
     addCleanPlugin(options),
@@ -42,6 +48,7 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
       suppressCompileStart: false,
       sound: !options.isWatching,
     }),
+    addNodemonPlugin(options),
     ...addServerPlugins(options),
     new ProgressBarPlugin({
       format: chalk`  building {blueBright ${options.title}} [:bar] {green :percent}`,
