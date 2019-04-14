@@ -7,6 +7,7 @@ process.traceDeprecation = true;
 
 function getParam(name) {
   const indexOfParam = process.argv.findIndex(arg => arg.toLowerCase() === `--${name}`);
+  if (process.argv.length - 1 === indexOfParam) { return true; }
   return indexOfParam !== -1 ? process.argv[indexOfParam + 1] : null;
 }
 
@@ -36,12 +37,16 @@ function applyDefaults(options) {
     constants: {},
     embedCSS: false,
     noCSS: options.target === 'node',
-    noMaps: options.target !== 'web',
+    noMaps: options.target === 'node',
     externals: [],
     plugins: [],
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
-    ...options,
     libraryTarget: options.target === 'node' || options.target === 'library' ? 'commonjs2' : 'umd',
+    ...options,
+    node: {
+      __dirname: true,
+      ...(options.node || {})
+    },
   };
 }
 
@@ -89,9 +94,7 @@ function createSingleConfig(options) {
     stats: require('./stats')(options),
     optimization: require('./optimization')(options),
     devServer: require('./devserver')(options),
-    node: {
-      __dirname: true,
-    },
+    node: options.node,
   };
   return options.measureSpeed ? speedMeasure.wrap(config) : config;
 }
