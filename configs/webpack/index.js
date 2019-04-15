@@ -16,7 +16,7 @@ function extractCallerPath(data) {
 }
 
 function applyDefaults(options) {
-  options.target = options.target || 'node';
+  options.target = options.target || 'library';
   return {
     title: 'Anux - Untitled Package',
     mode: 'development',
