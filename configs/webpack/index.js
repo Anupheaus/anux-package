@@ -29,7 +29,7 @@ function applyDefaults(options) {
     cleanOutputPath: false,
     measureSpeed: false,
     isWatching: false,
-    htmlTemplate: 'index.pug',
+    htmlTemplate: undefined,
     index: 'index.html',
     port: 1234,
     appCSSFileName: '[name].css',
@@ -117,7 +117,7 @@ function createSingleConfig(options) {
  * @property {boolean} [cleanOutputPath] Whether or not to clear the output path before writing the new compiled files to that location. Default is false.
  * @property {boolean} [measureSpeed] Whether or not to measure the speed of this configuration; mainly for debugging purposes. Default is false.
  * @property {boolean} [isWatching] Whether or not the files within this compilation are being watched. Default is false.
- * @property {string} [htmlTemplate] Default is 'index.pug'.
+ * @property {string} [htmlTemplate] Default is undefined.
  * @property {string} [index] Default is 'index.html'.
  * @property {number} [port] Default is 1234.
  * @property {string} [appCSSFileName] Default is '[name].css'.
