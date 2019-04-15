@@ -6,6 +6,7 @@ const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const CleanPlugin = require('clean-webpack-plugin');
 const chalk = require('chalk');
 const NodemonPlugin = require('nodemon-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 function addCleanPlugin(options) {
   if (!options.cleanOutputPath) { return null; }
@@ -34,6 +35,11 @@ function addNodemonPlugin(options) {
   return new NodemonPlugin();
 }
 
+function addCopyFilesPlugin(options) {
+  if(options.copy.length === 0) { return null; }
+  return new CopyPlugin(options.copy);
+}
+
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
     addCleanPlugin(options),
@@ -50,6 +56,7 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
     }),
     addNodemonPlugin(options),
     ...addServerPlugins(options),
+    addCopyFilesPlugin(options),
     new ProgressBarPlugin({
       format: chalk`  building {blueBright ${options.title}} [:bar] {green :percent}`,
     }),

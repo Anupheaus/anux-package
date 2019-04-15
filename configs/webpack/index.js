@@ -36,6 +36,7 @@ function applyDefaults(options) {
     excludeNodeModules: options.target === 'node' || options.target === 'library',
     constants: {},
     embedCSS: false,
+    copy: [],
     noCSS: options.target === 'node',
     noMaps: options.target === 'node',
     externals: [],
@@ -100,9 +101,15 @@ function createSingleConfig(options) {
 }
 
 /**
+ * @typedef {object} FromTo
+ * @property {string} from The location where the file is to be taken from
+ * @property {string} to The location where the file is to be written to in the output directory.
+ */
+
+/**
  * @typedef {object} Options
  * @property {string} title The title of this project.
- * @property {string} [target] Typically 'web' or 'node'. Default is 'node'.
+ * @property {string} [target] One of 'web', 'library' or 'node'. Default is 'library'.
  * @property {string} [mode] The mode of the compilation, either 'development' or 'production'. Default is 'development'.
  * @property {object} [entry] The entry file for this compilation. Default typically this is { index: './src/index.ts' }.
  * @property {string} [outputPath] The path where you want the output of the compilation to be saved to. Default is './dist/'.
@@ -120,6 +127,7 @@ function createSingleConfig(options) {
  * @property {boolean} [noMaps] Default is false.
  * @property {boolean} [includeTests] Default is false.
  * @property {boolean} [isServer] Default is true if being executed with webpack-dev-server.
+ * @property {FromTo[]} [copy] Copies files from the location given to the dist folder
  */
 
 /**
