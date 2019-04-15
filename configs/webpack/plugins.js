@@ -19,14 +19,14 @@ function addCSSExtraction(options, extractAppCSS, extractLibsCSS) {
 }
 
 function addServerPlugins(options) {
-  if (!options.isServer) { return []; }
+  if (!(options.isServer || options.htmlTemplate)) { return []; }
   return [
     new HtmlWebPackPlugin({
-      template: path.resolve(options.outputPath, options.htmlTemplate),
+      template: path.resolve(options.root, options.htmlTemplate),
       filename: path.resolve(options.outputPath, options.index),
       inject: 'head',
     }),
-    new webpack.HotModuleReplacementPlugin(),
+    options.isServer ? new webpack.HotModuleReplacementPlugin() : null,
   ];
 }
 
@@ -36,7 +36,7 @@ function addNodemonPlugin(options) {
 }
 
 function addCopyFilesPlugin(options) {
-  if(options.copy.length === 0) { return null; }
+  if (options.copy.length === 0) { return null; }
   return new CopyPlugin(options.copy);
 }
 
