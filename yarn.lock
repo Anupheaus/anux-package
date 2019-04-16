@@ -7920,10 +7920,10 @@ webidl-conversions@^4.0.2:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-4.0.2.tgz#a855980b1f0b6b359ba1d5d9fb39ae941faa63ad"
   integrity sha512-YQ+BmxuTgd6UXZW3+ICGfyqRyHXVlD5GtQr5+qjiNW7bF0cqrzX500HVXPBOvgXb5YnzDd+h0zqyv61KUD7+Sg==
 
-webpack-build-notifier@^0.1.31:
-  version "0.1.31"
-  resolved "https://registry.yarnpkg.com/webpack-build-notifier/-/webpack-build-notifier-0.1.31.tgz#8d3af97a434fdb06387d8b115b4efda0b185e307"
-  integrity sha512-NE/o7EvQ5DC5kat9ww6MMksjNx5HXVv8mOGOf0cb/qZVQaxklmZ9MyLnJc3Ur3j2j+R35whcwD3y2v64WJygtg==
+webpack-build-notifier@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/webpack-build-notifier/-/webpack-build-notifier-1.0.0.tgz#ad272d2a20ea3c0aadd90ba85feb6a9859002f8e"
+  integrity sha512-nwxMRkL87hbD28ouUSJ3yZu5m2WH/fg+n95VWQy+sNZX82rCsooXaD+y7bWMWPJIwBBvSN71FjpQDMhWnrvu6w==
   dependencies:
     ansi-regex "^2.0.0"
     node-notifier "5.2.1"
