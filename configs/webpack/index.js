@@ -39,6 +39,7 @@ function applyDefaults(options) {
     copy: [],
     noCSS: options.target === 'node',
     noMaps: options.target === 'node',
+    includeExternals: [],
     externals: [],
     plugins: [],
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
@@ -123,6 +124,7 @@ function createSingleConfig(options) {
  * @property {string} [appCSSFileName] Default is '[name].css'.
  * @property {object} [constants] Default is {}.
  * @property {boolean} [embedCSS] Default is false.
+ * @property {(string | Regex)[]} [includeExternals] An array of externals to be included in the bundle. Default is [].
  * @property {boolean} [noCSS] Default is false.
  * @property {boolean} [noMaps] Default is false.
  * @property {boolean} [includeTests] Default is false.

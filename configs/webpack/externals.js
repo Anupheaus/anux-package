@@ -1,17 +1,22 @@
+const fs = require('fs');
+const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
-// function nodeExternals(context, request, callback) {
-//   var moduleName = context.toLowerCase();
-//   if (moduleName.includes('node_modules')) {
-//     callback(null, `commonjs ${request}`);
-//   } else {
-//     callback();
-//   }
-// };
+function allNodeExternals(options) {
+  if (!options.excludeNodeModules) { return []; }
+  const config = {
+    whitelist: options.includeExternals || [],
+  };
+  console.log(config);
+  const externals = [nodeExternals(config)];
+  const rootModules = path.resolve(options.root, '../../node_modules');
+  if (fs.existsSync(rootModules)) { externals.push(nodeExternals({ ...config, modulesDir: rootModules })); }
+  return externals;
+};
 
 module.exports = function externals(options) {
   return [
-    options.excludeNodeModules ? nodeExternals() : null,
+    ...allNodeExternals(options),
     ...(options.externals || []),
   ].filter(v => !!v);
 };
