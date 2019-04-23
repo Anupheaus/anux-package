@@ -31,7 +31,7 @@ function addServerPlugins(options) {
 }
 
 function addNodemonPlugin(options) {
-  if (!options.isWatching || options.target !== 'node') { return undefined; }
+  if (options.useNodemon !== true) { return undefined; }
   return new NodemonPlugin();
 }
 

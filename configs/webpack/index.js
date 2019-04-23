@@ -39,6 +39,7 @@ function applyDefaults(options) {
     copy: [],
     noCSS: options.target === 'node',
     noMaps: options.target === 'node',
+    useNodemon: options.isWatching && options.target === 'node',
     includeExternals: [],
     externals: [],
     plugins: [],
@@ -125,6 +126,7 @@ function createSingleConfig(options) {
  * @property {object} [constants] Default is {}.
  * @property {boolean} [embedCSS] Default is false.
  * @property {(string | Regex)[]} [includeExternals] An array of externals to be included in the bundle. Default is [].
+ * @property {boolean} [useNodemon] Enable or disable the use of Nodemon after bundling.  Default is enabled when targeting node and watching for changes.
  * @property {boolean} [noCSS] Default is false.
  * @property {boolean} [noMaps] Default is false.
  * @property {boolean} [includeTests] Default is false.
