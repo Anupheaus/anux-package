@@ -7,7 +7,6 @@ function allNodeExternals(options) {
   const config = {
     whitelist: options.includeExternals || [],
   };
-  console.log(config);
   const externals = [nodeExternals(config)];
   const rootModules = path.resolve(options.root, '../../node_modules');
   if (fs.existsSync(rootModules)) { externals.push(nodeExternals({ ...config, modulesDir: rootModules })); }
