@@ -40,6 +40,15 @@ function addCopyFilesPlugin(options) {
   return new CopyPlugin(options.copy);
 }
 
+function addNotificationPlugin(options) {
+  if (options.disableNotificationWhenWatching && options.isWatching) { return null; }
+  return new NotifierPlugin({
+    title: options.title,
+    suppressCompileStart: false,
+    sound: !options.isWatching,
+  })
+}
+
 module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
   return [
     addCleanPlugin(options),
@@ -49,11 +58,7 @@ module.exports = function plugins(options, extractAppCSS, extractLibsCSS) {
     }),
     new webpack.DefinePlugin(options.constants),
     ...addCSSExtraction(options, extractAppCSS, extractLibsCSS),
-    new NotifierPlugin({
-      title: options.title,
-      suppressCompileStart: false,
-      sound: !options.isWatching,
-    }),
+    addNotificationPlugin(options),
     addNodemonPlugin(options),
     ...addServerPlugins(options),
     addCopyFilesPlugin(options),

@@ -41,6 +41,7 @@ function applyDefaults(options) {
     noMaps: options.target === 'node',
     useNodemon: options.isWatching && options.target === 'node',
     includeExternals: [],
+    disableNotificationWhenWatching: false,
     externals: [],
     plugins: [],
     isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
@@ -128,6 +129,7 @@ function createSingleConfig(options) {
  * @property {(string | Regex)[]} [includeExternals] An array of externals to be included in the bundle. Default is [].
  * @property {boolean} [useNodemon] Enable or disable the use of Nodemon after bundling.  Default is enabled when targeting node and watching for changes.
  * @property {boolean} [noCSS] Default is false.
+ * @property {boolean} [disableNotificationWhenWatching] Whether or not to show a notification on compiling and build completion when watching for changes.  Default is false.
  * @property {boolean} [noMaps] Default is false.
  * @property {boolean} [includeTests] Default is false.
  * @property {boolean} [isServer] Default is true if being executed with webpack-dev-server.
