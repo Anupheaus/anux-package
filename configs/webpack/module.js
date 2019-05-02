@@ -51,6 +51,10 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         loader: 'file-loader?name=fonts/[name].[ext]',
       },
       {
+        test: /\.(pem)$/,
+        loader: 'raw-loader',
+      },
+      {
         test: /\.js$/,
         use: ['source-map-loader'],
         enforce: 'pre',
