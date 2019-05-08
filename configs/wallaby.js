@@ -5,11 +5,13 @@ const setup = require('./test-setup');
  * @param {object} config The configuration settings for Wallaby
  * @param {string} config.name 
  * @param {boolean} config.enableReact
+ * @param {object[]} config.include
  */
 module.exports = function (config) {
   config = {
     name: 'Anux - Unknown Package',
     enableReact: false,
+    include: [],
     ...config || {},
   };
   return function () {
@@ -19,6 +21,7 @@ module.exports = function (config) {
         '!src/**/*.tests.ts?(x)',
         { pattern: 'src/**/harness.tsx', load: false, instrument: false },
         { pattern: 'src/**/*.ts?(x)', load: false },
+        ...config.include,
       ],
       tests: [
         { pattern: 'src/**/*.tests.ts?(x)' },
