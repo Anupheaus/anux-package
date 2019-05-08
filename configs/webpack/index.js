@@ -126,6 +126,7 @@ function createSingleConfig(options) {
  * @property {string} [appCSSFileName] Default is '[name].css'.
  * @property {object} [constants] Default is {}.
  * @property {boolean} [embedCSS] Default is false.
+ * @property {boolean} [excludeNodeModules] Default is true if target is either 'node' or 'library'.
  * @property {(string | Regex)[]} [includeExternals] An array of externals to be included in the bundle. Default is [].
  * @property {boolean} [useNodemon] Enable or disable the use of Nodemon after bundling.  Default is enabled when targeting node and watching for changes.
  * @property {boolean} [noCSS] Default is false.
