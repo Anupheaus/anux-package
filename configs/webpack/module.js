@@ -54,11 +54,11 @@ module.exports = function module(options, extractAppCSS, extractLibsCSS) {
         test: /\.(pem)$/,
         loader: 'raw-loader',
       },
-      {
+      (options.noMaps ? undefined : {
         test: /\.js$/,
         use: ['source-map-loader'],
         enforce: 'pre',
-      },
-    ],
+      }),
+    ].filter(v => v != null),
   };
 };

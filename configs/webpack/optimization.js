@@ -12,7 +12,7 @@ module.exports = function optimization(options) {
           keep_classnames: true,
           keep_fnames: true,
         },
-        sourceMap: true,
+        sourceMap: !options.noMaps,
       }),
     ],
   };
