@@ -33,22 +33,26 @@ function applyDefaults(options) {
     index: 'index.html',
     port: 1234,
     appCSSFileName: '[name].css',
-    excludeNodeModules: options.target === 'node' || options.target === 'library',
+    excludeNodeModules: ['node', 'library', 'server'].includes(options.target),
     constants: {},
     embedCSS: false,
     copy: [],
-    noCSS: options.target === 'node',
-    noMaps: options.target === 'node',
-    useNodemon: options.isWatching && options.target === 'node',
+    noCSS: ['node', 'server'].includes(options.target),
+    noMaps: ['node', 'server'].includes(options.target),
+    useNodemon: options.isWatching && ['node', 'server'].includes(options.target),
     includeExternals: [],
     disableNotificationWhenWatching: false,
     externals: [],
     plugins: [],
-    isServer: process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
-    libraryTarget: options.target === 'node' || options.target === 'library' ? 'commonjs2' : 'umd',
+    isServer: options.target === 'server' || process.argv.some(item => item.toLowerCase().includes('webpack-dev-server')),
+    libraryTarget: ['node', 'server', 'library'].includes(options.target) ? 'commonjs2' : 'umd',
     ...options,
     node: {
       __dirname: true,
+      ...(options.target === 'web' ? {
+        fs: 'empty',
+        path: 'empty',
+      } : {}),
       ...(options.node || {})
     },
   };
@@ -84,7 +88,7 @@ function createSingleConfig(options) {
     entry: options.entry,
     mode: options.mode,
     devtool: options.noMaps ? false : 'source-map',
-    target: ['node', 'library'].includes(options.target) ? 'node' : 'web',
+    target: ['node', 'library', 'server'].includes(options.target) ? 'node' : 'web',
     output: {
       path: path.resolve(options.root, options.outputPath),
       filename: '[name].js',
@@ -112,7 +116,7 @@ function createSingleConfig(options) {
 /**
  * @typedef {object} Options
  * @property {string} title The title of this project.
- * @property {string} [target] One of 'web', 'library' or 'node'. Default is 'library'.
+ * @property {string} [target] One of 'web', 'library', 'server' or 'node'. Default is 'library'.
  * @property {string} [mode] The mode of the compilation, either 'development' or 'production'. Default is 'development'.
  * @property {object} [entry] The entry file for this compilation. Default typically this is { index: './src/index.ts' }.
  * @property {string} [outputPath] The path where you want the output of the compilation to be saved to. Default is './dist/'.

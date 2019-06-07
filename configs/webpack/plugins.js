@@ -19,15 +19,17 @@ function addCSSExtraction(options, extractAppCSS, extractLibsCSS) {
 }
 
 function addServerPlugins(options) {
-  if (!(options.isServer || options.htmlTemplate)) { return []; }
-  return [
-    new HtmlWebPackPlugin({
+  if (!options.isServer) { return []; }
+  const plugins = [];
+  if (options.htmlTemplate) {
+    plugins.push(new HtmlWebPackPlugin({
       template: path.resolve(options.root, options.htmlTemplate),
       filename: path.resolve(options.outputPath, options.index),
       inject: 'head',
-    }),
-    options.isServer ? new webpack.HotModuleReplacementPlugin() : null,
-  ];
+    }));
+  }
+  plugins.push(new webpack.HotModuleReplacementPlugin());
+  return plugins;
 }
 
 function addNodemonPlugin(options) {
