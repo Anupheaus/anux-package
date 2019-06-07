@@ -3,14 +3,14 @@ const path = require('path');
 const HtmlWebPackPlugin = require('html-webpack-plugin');
 const NotifierPlugin = require('webpack-build-notifier');
 const ProgressBarPlugin = require('progress-bar-webpack-plugin');
-const CleanPlugin = require('clean-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const chalk = require('chalk');
 const NodemonPlugin = require('nodemon-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
 function addCleanPlugin(options) {
   if (!options.cleanOutputPath) { return null; }
-  return new CleanPlugin();
+  return new CleanWebpackPlugin();
 }
 
 function addCSSExtraction(options, extractAppCSS, extractLibsCSS) {
