@@ -9,7 +9,7 @@ module.exports = function (options) {
     },
     target: 'web',
     outputPath: path.resolve(__dirname, '../../../harness'),
-    htmlTemplate: './harness.pug',
+    htmlTemplate: path.resolve(__dirname, '../../../harness/harness.pug'),
     index: './harness.html',
     appCSSFileName: './index.css',
     cleanOutputPath: false,
