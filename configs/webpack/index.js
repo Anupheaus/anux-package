@@ -73,9 +73,12 @@ function createCSSExtractors(options) {
 }
 
 function createSingleConfig(options) {
-  options = applyDefaults(options);
 
+  // configure using config name
   if (options.configName === 'harness') { options = require('./configs/harness')(options); }
+
+  // apply defaults
+  options = applyDefaults(options);
 
   if (options.outputPath == null) { throw new Error('The output path needs to be specified to create a valid webpack configuration.'); }
   if (options.noVendor) { options.separateVendor = false; }
