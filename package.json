@@ -28,7 +28,7 @@
     "@types/enzyme": "^3.9.3",
     "autoprefixer": "^9.6.0",
     "stylelint-config-sass-guidelines": "^6.0.0",
-    "stylelint": "^10.1.0",
+    "stylelint": "^11.0.0",
     "stylelint-scss": "^3.8.0",
     "tslint": "^5.17.0",
     "tslint-no-unused-expression-chai": "^0.1.4",
