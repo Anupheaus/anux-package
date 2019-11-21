@@ -1,4 +1,7 @@
+const path = require('path');
+const fs = require('fs');
 const setup = require('./test-setup');
+const root = process.cwd();
 
 /**
  * A function to configure Wallaby for your package.
@@ -8,18 +11,20 @@ const setup = require('./test-setup');
  * @param {object[]} config.include
  */
 module.exports = function (config) {
+  const packageJsonPath = path.resolve(root, 'package.json');
+  if (!fs.existsSync(packageJsonPath)) { throw new Error('Unable to find package.json file for this package.'); }
+  const { name } = require(packageJsonPath);
   config = {
-    name: 'Anux - Unknown Package',
-    enableReact: false,
+    name,
     include: [],
-    ...config || {},
+    ...config,
   };
   return function () {
     return {
       name: config.name,
       files: [
+        { pattern: 'package.json', load: false },
         '!src/**/*.tests.ts?(x)',
-        { pattern: 'src/**/harness.tsx', load: false, instrument: false },
         { pattern: 'src/**/*.ts?(x)', load: false },
         ...config.include,
       ],
@@ -34,6 +39,7 @@ module.exports = function (config) {
         initial: 6,
         regular: 3,
       },
+      debug: true,
       setup: eval('(function () { (' + setup.toString() + ')(' + JSON.stringify(config) + '); })'),
     };
   };

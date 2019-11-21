@@ -1,13 +1,12 @@
-/**
- * @param {object} config
- * @param {boolean} config.enableReact
- * @param {string} config.root
- */
-function setup(config) {
-  try { require('anux-common'); } catch (error) { }
+function setup() {
+  try { require('anux-common'); } catch (error) { /* do nothing */ }
+  let enableReact = false;
+  try { enableReact = !!require('react'); } catch (error) { /* do nothing */ }
   const chai = require('chai');
   const spies = require('chai-spies');
   const fuzzy = require('chai-fuzzy');
+
+  console.log(enableReact);
 
   chai.use(spies);
   chai.use(fuzzy);
@@ -15,7 +14,7 @@ function setup(config) {
   global['chai'] = chai;
   global['expect'] = chai.expect;
 
-  if (config.enableReact) {
+  if (enableReact) {
     const { JSDOM } = require('jsdom');
     const { window } = new JSDOM('<!doctype html><html><body></body></html>', {
       pretendToBeVisual: false,
@@ -59,7 +58,7 @@ function setup(config) {
 }
 
 // mocha can't call the function so we have to do it for it
-const config = process.env['test-config'] && JSON.parse(process.env['test-config']);
-if (config) { setup(config); }
+// const config = process.env['test-config'] && JSON.parse(process.env['test-config']);
+if (process.env['is-mocha']) { setup(); }
 
 module.exports = setup;

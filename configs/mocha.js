@@ -1,5 +1,4 @@
 const path = require('path');
-const callerId = require('caller-id');
 
 function addIfExists(dependency) {
   try {
@@ -14,18 +13,14 @@ function addIfExists(dependency) {
   }
 }
 
-/**
- * @param {object} config
- * @param {boolean} config.enableReact
- */
-module.exports = function (config) {
-  const { filePath } = callerId.getData();
-  const root = path.dirname(filePath);
-  process.env['test-config'] = JSON.stringify({ ...config, root });
+module.exports = function () {
+  const root = process.cwd();
+  // process.env['test-config'] = JSON.stringify({ root });  
+  process.env['is-mocha'] = true;
   return {
     require: [
       'ts-node/register',
-      'jsdom-global/register',
+      addIfExists('jsdom-global/register'),
       addIfExists('anux-common'),
       path.relative(root, path.resolve(__dirname, './test-setup.js')),
     ].filter(v => v != null),

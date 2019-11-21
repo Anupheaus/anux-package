@@ -11,6 +11,7 @@
     "noImplicitAny": false,
     "module": "commonjs",
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "lib": [
       "es2018",
       "dom",
@@ -19,26 +20,6 @@
     ],
     "target": "es2018",
     "sourceMap": true,
-    "jsx": "react",
-    "types": [
-      "anux-package",
-      "mocha",
-      "chai",
-      "chai-spies",
-      "chai-fuzzy"
-    ]
-  },
-  "exclude": [
-    "node_modules",
-    "../../../dist",
-    "../../dist",
-    "**/*_dnc/**/*.*",
-    "**/*.tests.*"
-  ],
-  "typeAcquisition": {
-    "exclude": [
-      "../../../dist",
-      "../../dist"
-    ]
+    "jsx": "react"
   }
 }

@@ -1,5 +1,0 @@
-{
-  "extends": [
-    "./linters/ts.json"
-  ]
-}
