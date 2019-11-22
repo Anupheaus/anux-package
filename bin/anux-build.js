@@ -1,6 +1,6 @@
 const chalk = require('chalk');
 const { logInfo } = require('./log');
-const { getPackageJson, getPackageJsonAnuxSettings, shell, getArg, resolveFile, waitForAnyKeyToEnd } = require('./utils');
+const { getPackageJson, getPackageJsonAnuxSettings, shell, getArg, resolveFile, waitForAnyKeyToEnd, end } = require('./utils');
 
 function getArgs(args) {
   const isDev = getArg(args, 'dev', false);
@@ -43,6 +43,14 @@ module.exports = function anuxBuild(args) {
     const configFile = await resolveFile('configs/webpack.config.js');
     const buildCommand = `npx webpack --config ${configFile} ${isDev ? '--mode development --watch' : '--mode production'} ${useNodemon ? '--use-nodemon' : ''}`;
     buildProcess = shell(buildCommand);
+    buildProcess.catch(({ exitCode, stdout, stderr }) => {
+      exitCode = exitCode == null ? 0 : exitCode;
+      if (exitCode !== 0) {
+        stderr = stderr === '' ? stdout : stderr;
+        // eslint-disable-next-line no-console
+        console.error(stderr);
+      }
+    });
     if (isDev) {
       if (!nonInteractive) { await waitForAnyKeyToEnd(endBuild); }
     } else {

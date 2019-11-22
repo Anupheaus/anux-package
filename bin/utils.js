@@ -143,10 +143,12 @@ function shell(command, options = {}) {
   const lines = [];
   const errorLines = [];
   commandProcess.stdout.on('data', line => {
+    if (stdout) { console.log(line); }
     lines.push(line.toString());
     while (lines.length > 500) { lines.shift(); }
   });
   commandProcess.stderr.on('data', line => {
+    if (stdout) { console.error(line); }
     errorLines.push(line.toString());
     while (errorLines.length > 500) { errorLines.shift(); }
   });
