@@ -141,11 +141,23 @@ function shell(command, options = {}) {
   env.FORCE_COLOR = 1;
   const commandProcess = childProcess.exec(command, { async: true, env, cwd });
   const lines = [];
+  const errorLines = [];
   commandProcess.stdout.on('data', line => {
     lines.push(line.toString());
     while (lines.length > 500) { lines.shift(); }
   });
-  const promise = new Promise(resolve => commandProcess.on('exit', exitCode => resolve({ exitCode, stdout: lines.join('') })));
+  commandProcess.stderr.on('data', line => {
+    errorLines.push(line.toString());
+    while (errorLines.length > 500) { errorLines.shift(); }
+  });
+  const promise = new Promise((resolve, reject) => commandProcess.on('exit', exitCode => {
+    exitCode = exitCode == null ? 0 : exitCode;
+    if (exitCode === 0) {
+      resolve({ exitCode, stdout: lines.join('') });
+    } else {
+      reject({ exitCode, stdout: lines.join(''), stderr: errorLines.join('') });
+    }
+  }));
   promise.kill = async () => {
     await new Promise((resolve, reject) => kill(commandProcess.pid, error => error ? reject(error) : resolve()));
     await promise;

@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const glob = require('fast-glob');
-const { getPackageJson, writePackageJson, shell, getLastModifiedDateOf, copyFile } = require('./utils');
+const { getPackageJson, writePackageJson, shell, getLastModifiedDateOf, copyFile, end } = require('./utils');
 const { logInfo } = require('./log');
 
 const root = process.cwd();
@@ -61,7 +61,7 @@ async function makeTarballsOfLinks(packagePath, packageJson) {
   });
 }
 
-function doInstall() {
+async function doInstall() {
   logInfo('Installing dependencies...');
   return shell('npm install --loglevel=error --color always');
 }
@@ -82,7 +82,10 @@ async function createSymlinksForLinks(packageJson) {
     await Promise.all(linkLocations.map(linkLocation => Promise.all(allFiles.map(async fileOrPath => {
       const localFileOrPath = path.resolve(linkLocation, fileOrPath);
       const linkFileOrPath = path.resolve(linkPath, fileOrPath);
-      if (fs.existsSync(localFileOrPath)) { await shell(`rm -rf ${localFileOrPath}`, { stdout: false }); }
+      if (fs.existsSync(localFileOrPath)) {
+        if (fs.realpathSync(localFileOrPath) !== localFileOrPath) { return; }
+        await shell(`rm -rf ${localFileOrPath}`, { stdout: false });
+      }
       if (fs.statSync(linkFileOrPath).isDirectory()) {
         fs.symlinkSync(linkFileOrPath, localFileOrPath, 'junction');
       } else {
@@ -106,7 +109,13 @@ module.exports = async function anuxInstall() {
   sortAllDependencies(packageJson);
   await makeTarballsOfLinks(root, packageJson);
   writePackageJson(packageJson);
-  await doInstall();
+  try {
+    await doInstall();
+  } catch ({ exitCode, stderr }) {
+    // eslint-disable-next-line no-console
+    console.error(stderr);
+    end(1);
+  }
   await createSymlinksForLinks(packageJson);
   logInfo('Finished installing.');
 };
