@@ -38,7 +38,7 @@
     "merge-deep": "^3.0.2",
     "mocha": "^6.2.2",
     "nodemon-webpack-plugin": "^4.2.1",
-    "terser-webpack-plugin": "^2.2.1",
+    "terser-webpack-plugin": "^2.3.3",
     "tree-kill": "^1.2.1",
     "ts-loader": "^6.2.1",
     "tslib": "^1.10.0",
