@@ -16,7 +16,7 @@
     "anux": "./bin/anux.js"
   },
   "dependencies": {
-    "@types/chai": "^4.2.5",
+    "@types/chai": "^4.2.8",
     "@types/chai-fuzzy": "^1.3.31",
     "@types/chai-spies": "^1.0.1",
     "@types/mocha": "^5.2.7",
