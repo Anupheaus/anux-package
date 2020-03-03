@@ -40,8 +40,13 @@ module.exports = (env, argv) => {
           compilerOptions: {
             declaration: true,
             declarationDir: './dist',
+            noEmit: false,
           },
         },
+      }, {
+        test: /\.js$/,
+        use: ['source-map-loader'],
+        enforce: 'pre'
       }],
     },
     optimization: {
@@ -67,7 +72,7 @@ module.exports = (env, argv) => {
       includeNodeModules ? null : nodeExternals(),
     ].filter(item => !!item),
     resolve: {
-      extensions: ['.ts', '.js'],
+      extensions: ['.ts', '.tsx', '.js', '.jsx'],
     },
     stats: {
       assets: false,

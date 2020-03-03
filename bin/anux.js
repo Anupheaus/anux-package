@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-const path = require('path');
-const fs = require('fs');
 const { end, resolveFile } = require('./utils');
 const { logError } = require('./log');
 
@@ -23,6 +21,6 @@ const { logError } = require('./log');
 })().catch(error => {
   logError(error.message);
   // eslint-disable-next-line no-console
-  console.error(error);
+  // console.error(error);
   end();
 });

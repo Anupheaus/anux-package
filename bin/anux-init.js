@@ -1,25 +1,24 @@
 const path = require('path');
 const { logInfo } = require('./log');
-const { resolveFile } = require('./utils');
-const anuxInstall = require('./anux-install');
+const { resolveFile, getPackageJson } = require('./utils');
 
-async function getGeneratorFor(templateFile) {
-  const generatorPath = await resolveFile(path.join('templates', 'generator', `${templateFile}.js`));
-  if (generatorPath) { return require(generatorPath); }
+async function getInitFor(templateFile) {
+  const initPath = await resolveFile(path.join('templates', `${templateFile}.init.js`));
+  if (initPath) { return require(initPath); }
 }
 
 async function initTemplate(templateFile) {
-  const generate = await getGeneratorFor(templateFile);
-  if (!generate) { throw new Error(`Unable to generate file ${templateFile}.`); }
-  await generate();
+  const init = await getInitFor(templateFile);
+  if (!init) { throw new Error(`Unable to generate file ${templateFile}.`); }
+  await init();
 }
 
 module.exports = async () => {
-  await initTemplate('eslintrc');
+  const { name, version } = getPackageJson({ throwErrorIfNotFound: true });
+  logInfo(`Initialising package: ${name} v${version}`);
+  await initTemplate('.eslintrc');
   await initTemplate('wallaby');
   await initTemplate('gitignore');
   await initTemplate('tsconfig');
-  await initTemplate('circleci');
-  await anuxInstall();
-  logInfo('Finished initialising and updating this package.');
+  logInfo('Finished initialising this package.');
 };

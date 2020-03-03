@@ -8,7 +8,6 @@ const kill = require('tree-kill');
 const chalk = require('chalk');
 const glob = require('fast-glob');
 const deepMerge = require('merge-deep');
-const { logWarn } = require('./log');
 const root = process.cwd();
 
 function writeTemplateByPackageType(packageType, templateName) {
@@ -85,29 +84,22 @@ function getAnuxPath(subPath) {
 
 async function resolveFile(file) {
   let packageJson = getPackageJson();
-  const localPath = path.resolve(root, file)
+  const localPath = path.join(root, file);
   if (fs.existsSync(localPath)) { return localPath; }
   let currentAnuxPackage;
   const nodeModuleRoot = path.join(root, 'node_modules');
   do {
     currentAnuxPackage = identifyAnuxPackage(packageJson)
     if (currentAnuxPackage) {
-      const attempts = 1;
       while (true) { // eslint-disable-line no-constant-condition
         const anuxPackagePaths = await glob(`**/${currentAnuxPackage}`, { cwd: nodeModuleRoot, onlyDirectories: true, absolute: true, followSymbolicLinks: true });
         if (anuxPackagePaths.length === 0) {
-          if (attempts < 2) {
-            logWarn(`Warning: Unable to find ${currentAnuxPackage} within the node modules for this package, attempting to link this package now...`);
-            await shell(`npm link ${currentAnuxPackage}`); // eslint-disable-line @typescript-eslint/no-use-before-define
-            continue;
-          } else {
-            throw new Error(`Unable to link the ${currentAnuxPackage} package, please ensure this package is linkable and then try again.`);
-          }
+          throw new Error(`Unable to find ${currentAnuxPackage} within the node modules for this package, please install this package first...`);
         }
         const anuxPackagePath = anuxPackagePaths[0]
-        const filePath = path.resolve(anuxPackagePath, file);
+        const filePath = path.join(anuxPackagePath, file);
         if (fs.existsSync(filePath)) { return filePath; }
-        packageJson = require(path.resolve(anuxPackagePath, 'package.json'));
+        packageJson = require(path.join(anuxPackagePath, 'package.json'));
         break;
       }
     }
@@ -131,28 +123,31 @@ ModifyStream.prototype._transform = function (chunk, encoding, done) {
 };
 
 function shell(command, options = {}) {
-  const { prefix, cwd, stdout } = {
-    prefix: '',
+  const { cwd, stdout } = {
     cwd: undefined,
     stdout: true,
     ...options,
   }
+  let ignoreErrors = false;
   const env = { ...process.env };
   env.FORCE_COLOR = 1;
   const commandProcess = childProcess.exec(command, { async: true, env, cwd });
   const lines = [];
   const errorLines = [];
   commandProcess.stdout.on('data', line => {
+    // eslint-disable-next-line no-console
     if (stdout) { console.log(line); }
     lines.push(line.toString());
     while (lines.length > 500) { lines.shift(); }
   });
   commandProcess.stderr.on('data', line => {
+    // eslint-disable-next-line no-console
     if (stdout) { console.error(line); }
     errorLines.push(line.toString());
     while (errorLines.length > 500) { errorLines.shift(); }
   });
   const promise = new Promise((resolve, reject) => commandProcess.on('exit', exitCode => {
+    if (ignoreErrors) { return resolve(); }
     exitCode = exitCode == null ? 0 : exitCode;
     if (exitCode === 0) {
       resolve({ exitCode, stdout: lines.join('') });
@@ -161,7 +156,8 @@ function shell(command, options = {}) {
     }
   }));
   promise.kill = async () => {
-    await new Promise((resolve, reject) => kill(commandProcess.pid, error => error ? reject(error) : resolve()));
+    ignoreErrors = true;
+    await new Promise((resolve, reject) => kill(commandProcess.pid, error => error != null ? reject(error) : resolve()));
     await promise;
   };
   return promise;
@@ -182,10 +178,27 @@ function getLastModifiedDateOf(file) {
   return stats.mtime;
 }
 
-function copyFile(source, dest) {
+function copyFile(source, dest, options) {
+  const {
+    silentFailIfExists = false,
+    failIfExists = false,
+  } = options || {};
   if (!fs.existsSync(source)) { throw new Error(`Unable to find the source file to copy (source: ${source}).`); }
   if (!fs.existsSync(path.dirname(dest))) { fs.mkdirSync(path.dirname(dest), { recursive: true }); }
+  if (fs.existsSync(dest)) {
+    if (silentFailIfExists) return;
+    if (failIfExists) throw new Error(`The destination file "${dest}" already exists.`);
+  }
   fs.copyFileSync(source, dest);
+}
+
+async function packPackage(packagePath) {
+  const result = await shell('npm pack --loglevel error', { cwd: packagePath, stdout: false });
+  const tarballFileName = path.resolve(packagePath, 'package.tgz');
+  const sourceTarballFileName = path.resolve(packagePath, result.stdout.trim());
+  copyFile(sourceTarballFileName, tarballFileName);
+  fs.unlinkSync(sourceTarballFileName);
+  return tarballFileName;
 }
 
 let isShuttingDown = false;
@@ -201,7 +214,7 @@ async function waitForAnyKeyToEnd(delegate) {
 
   attachOrDetachFromProcessSignals(true);
   await query('');
-  endProcess();
+  await endProcess();
 }
 
 module.exports = {
@@ -219,4 +232,5 @@ module.exports = {
   getLastModifiedDateOf,
   copyFile,
   waitForAnyKeyToEnd,
+  packPackage,
 }

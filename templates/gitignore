@@ -1,0 +1,16 @@
+# NPM
+node_modules
+*.tgz
+
+# Logs
+*.log
+
+# Caches
+.awcache
+.cache
+
+# vs code
+.vscode
+
+# webpack
+dist

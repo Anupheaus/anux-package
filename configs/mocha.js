@@ -5,7 +5,7 @@ function addIfExists(dependency) {
     require.resolve(dependency);
     return dependency;
   } catch (e) {
-    if (e.message && e.message.toLowerCase() === `cannot find module '${dependency}'`) {
+    if (e.message && e.message.toLowerCase().includes('cannot find module')) {
       return undefined;
     } else {
       throw e;
@@ -13,7 +13,7 @@ function addIfExists(dependency) {
   }
 }
 
-module.exports = function () {
+module.exports = (function () {
   const root = process.cwd();
   // process.env['test-config'] = JSON.stringify({ root });  
   process.env['is-mocha'] = true;
@@ -26,4 +26,4 @@ module.exports = function () {
     ].filter(v => v != null),
     spec: './src/**/*.tests.+(ts|tsx)',
   };
-};
+})();

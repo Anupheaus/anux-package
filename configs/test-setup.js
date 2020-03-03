@@ -6,8 +6,6 @@ function setup() {
   const spies = require('chai-spies');
   const fuzzy = require('chai-fuzzy');
 
-  console.log(enableReact);
-
   chai.use(spies);
   chai.use(fuzzy);
 
@@ -20,9 +18,10 @@ function setup() {
       pretendToBeVisual: false,
       userAgent: 'mocha',
     });
+
     const React = require('react');
     const enzyme = require('enzyme');
-    const Adapter = require('enzyme-adapter-react-16');
+    const Adapter = require('enzyme-adapter-react-16.3');
 
     global['React'] = React;
     global['window'] = window;
@@ -59,6 +58,7 @@ function setup() {
 
 // mocha can't call the function so we have to do it for it
 // const config = process.env['test-config'] && JSON.parse(process.env['test-config']);
+// eslint-disable-next-line mocha/no-top-level-hooks, mocha/no-hooks-for-single-case
 if (process.env['is-mocha']) { setup(); }
 
 module.exports = setup;

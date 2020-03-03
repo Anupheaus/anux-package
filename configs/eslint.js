@@ -3,12 +3,16 @@ module.exports = {
   'parserOptions': {
     'ecmaVersion': 2019,
     'sourceType': 'module',
+    'ecmaFeatures': {
+      'jsx': true
+    }
   },
   'plugins': [
     '@typescript-eslint',
     'import',
     'chai-friendly',
     'mocha',
+    'react',
   ],
   'extends': [
     'eslint:recommended',
@@ -18,7 +22,13 @@ module.exports = {
     'plugin:import/warnings',
     'plugin:import/typescript',
     'plugin:mocha/recommended',
+    'plugin:react/recommended',
   ],
+  'settings': {
+    'react': {
+      'version': 'detect',
+    },
+  },
   'env': {
     'browser': true,
     'node': true,
@@ -100,16 +110,24 @@ module.exports = {
       'warn',
       {
         'args': 'after-used',
+        'argsIgnorePattern': '^_',
         'varsIgnorePattern': '^_',
-        'ignoreRestSiblings': true
-      }
+        'ignoreRestSiblings': true,
+      },
     ],
     'import/no-unresolved': 'error',
     'import/export': 'off',
-    'import/order': 'error',
+    'import/order': 'off',
     'import/named': 'off',
-    'chai-friendly/no-unused-expressions': 'error',
+    'chai-friendly/no-unused-expressions': 'off',
     'mocha/no-exclusive-tests': 'error',
     'mocha/no-mocha-arrows': 'off',
-  }
+    'mocha/handle-done-callback': 'off',
+    'mocha/no-setup-in-describe': 'off',
+    'react/jsx-uses-react': 'error',
+    'react/jsx-uses-vars': 'error',
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+    'react/display-name': 'off',
+  },
 };
