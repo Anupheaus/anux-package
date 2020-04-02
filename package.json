@@ -26,7 +26,7 @@
     "chai": "^4.2.0",
     "chai-fuzzy": "^1.6.1",
     "chai-spies": "^1.0.0",
-    "chalk": "^3.0.0",
+    "chalk": "^4.0.0",
     "chokidar": "^3.3.0",
     "eslint": "^6.6.0",
     "eslint-import-resolver-node": "^0.3.2",
