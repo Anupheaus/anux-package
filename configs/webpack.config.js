@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/camelcase */
 const path = require('path');
 const root = process.cwd();
 const nodeExternals = require('webpack-node-externals');
@@ -52,9 +51,7 @@ module.exports = (env, argv) => {
     optimization: {
       minimizer: [
         new TerserPlugin({
-          cache: true,
           parallel: true,
-          sourceMap: true,
           terserOptions: {
             compress: !isDev,
             keep_classnames: true,

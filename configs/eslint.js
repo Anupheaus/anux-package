@@ -62,7 +62,7 @@ module.exports = {
     ],
     'sort-imports': 'off',
     'no-unused-vars': 'off',
-    'no-shadow': 'warn',
+    'no-shadow': 'off',
     'no-unused-expressions': 'off',
     'no-unused-labels': 'error',
     'prefer-const': [
@@ -97,6 +97,7 @@ module.exports = {
     ],
     '@typescript-eslint/ban-types': 'off',
     '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/no-shadow': ['warn'],
     '@typescript-eslint/interface-name-prefix': 'off',
     '@typescript-eslint/indent': [
       'error',
