@@ -34,7 +34,7 @@ module.exports = function anuxBuild(args) {
       logInfo('Cleared, continuing build process...');
     }
     const configFile = await resolveFile('configs/webpack.config.js');
-    const buildCommand = `npx webpack --config ${configFile} ${isDev ? '--mode development --watch' : '--mode production'} ${useNodemon ? '--use-nodemon' : ''}`;
+    const buildCommand = `npx webpack --config ${configFile} ${isDev ? '--mode development --watch' : '--mode production'} ${useNodemon ? '--env useNodemon' : ''}`;
     buildProcess = shell(buildCommand);
     buildProcess.catch(({ exitCode, stdout, stderr }) => {
       exitCode = exitCode == null ? 0 : exitCode;

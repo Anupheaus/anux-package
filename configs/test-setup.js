@@ -23,7 +23,7 @@ function setup() {
 
     const React = require('react');
     const enzyme = require('enzyme');
-    const Adapter = require('enzyme-adapter-react-16.3');
+    const Adapter = require('@wojtekmaj/enzyme-adapter-react-17');
 
     global['React'] = React;
     global['window'] = window;

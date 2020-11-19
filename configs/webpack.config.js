@@ -5,9 +5,9 @@ const TerserPlugin = require('terser-webpack-plugin');
 const { logInfo } = require('../bin/log');
 const { getPackageJson, getPackageJsonAnuxSettings } = require('../bin/utils');
 
-module.exports = (env, argv) => {
+module.exports = (env = {}, argv) => {
   const isDev = argv.mode === 'development';
-  const useNodemon = argv.useNodemon === true;
+  const useNodemon = env.useNodemon === true;
   const { name } = getPackageJson({ throwErrorIfNotFound: true });
   let { build: { entry, includeNodeModules } } = getPackageJsonAnuxSettings({ build: { includeNodeModules: false } });
 
